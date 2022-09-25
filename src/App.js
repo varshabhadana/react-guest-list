@@ -77,38 +77,48 @@ function App() {
       <h1>Add Guest</h1>
       <Card>
         {/* First name input */}
-        <InputContainer>
-          <Label htmlFor="First-name">First name</Label>
-          <input
-            value={firstName}
-            disabled={isLoading}
-            onChange={(event) => {
-              setFirstName(event.target.value);
-            }}
-          />
-        </InputContainer>
-        {/* Last name input */}
-        <InputContainer>
-          <Label htmlFor="Last-name">Last name</Label>
-          <input
-            value={lastName}
-            disabled={isLoading}
-            onChange={(event) => {
-              setLastName(event.target.value);
-            }}
-          />
-        </InputContainer>
-
-        {/* Button to add new guest */}
-        <ButtonStyle
-          onClick={async () => {
+        <form
+          onSubmit={async (event) => {
+            event.preventDefault();
             await addGuest();
             setFirstName('');
             setLastName('');
           }}
         >
-          Add
-        </ButtonStyle>
+          <InputContainer>
+            <Label htmlFor="First-name">First name</Label>
+            <input
+              value={firstName}
+              disabled={isLoading}
+              onChange={(event) => {
+                setFirstName(event.target.value);
+              }}
+            />
+          </InputContainer>
+          {/* Last name input */}
+          <InputContainer>
+            <Label htmlFor="Last-name">Last name</Label>
+            <input
+              value={lastName}
+              disabled={isLoading}
+              onChange={(event) => {
+                setLastName(event.target.value);
+              }}
+            />
+          </InputContainer>
+
+          {/* Button to add new guest */}
+          <ButtonStyle
+            type="submit"
+            /* onClick={async () => {
+            await addGuest();
+            setFirstName('');
+            setLastName('');
+          }} */
+          >
+            Add
+          </ButtonStyle>
+        </form>
       </Card>
 
       {/* Ternary on Loading message */}
