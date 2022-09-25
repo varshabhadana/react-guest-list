@@ -1,5 +1,14 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import {
+  ButtonStyle,
+  Card,
+  CheckBox,
+  Container,
+  GuestList,
+  InputContainer,
+  Label,
+  RemoveButton,
+} from './style';
 
 function App() {
   const [firstName, setFirstName] = useState('');
@@ -8,6 +17,7 @@ function App() {
   const [guestList, setGuestList] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
+
   const baseUrl = 'https://232afac8-d1ad-4b1c-a25c-b32515b1eaed.id.repl.co';
 
   // fetching data array
@@ -63,52 +73,54 @@ function App() {
     }
   }, [guestList]);
 
-  if (isLoading) return <div>Loading Text</div>;
-
   return (
-    <div>
-      <h1>Guest List</h1>
+    <Container data-test-id="guest">
+      <h1>Add Guest</h1>
+      <Card>
+        {/* First name input */}
+        <InputContainer>
+          <Label htmlFor="First-name">First name</Label>
+          <input
+            value={firstName}
+            onChange={(event) => {
+              setFirstName(event.target.value);
+            }}
+          />
+        </InputContainer>
+        {/* Last name input */}
+        <InputContainer>
+          <Label htmlFor="Last-name">Last name</Label>
+          <input
+            value={lastName}
+            onChange={(event) => {
+              setLastName(event.target.value);
+            }}
+          />
+        </InputContainer>
 
-      {/* First name input */}
+        {/* Button to add new guest */}
+        <ButtonStyle
+          onClick={async () => {
+            await addGuest();
+            setFirstName('');
+            setLastName('');
+          }}
+        >
+          Add
+        </ButtonStyle>
+      </Card>
+      {guestList.length > 0 ? (
+        /* /* Mapping over an array */
+        <div>
+          <h3>Guest List:</h3>
 
-      <label htmlFor="First-name">First name</label>
-      <input
-        value={firstName}
-        onChange={(event) => {
-          setFirstName(event.target.value);
-        }}
-      />
-      {/* Last name input */}
-
-      <label htmlFor="Last-name">Last name</label>
-      <input
-        value={lastName}
-        onChange={(event) => {
-          setLastName(event.target.value);
-        }}
-      />
-
-      {/* Button to add new guest */}
-      <button onClick={addGuest}>Add</button>
-
-      {/* /* Mapping over an array */}
-
-      <div>
-        {
-          guestList.map((el) => (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'coloumn',
-                marginright: '30px',
-              }}
-              key={el.id}
-            >
+          {guestList.map((el) => (
+            <GuestList key={el.id}>
               <p style={{ marginRight: '30px' }}>{el.firstName}</p>
               <p style={{ marginRight: '30px' }}>{el.lastName}</p>
 
               {/* Checkbox to change attending status */}
-              <input
+              <CheckBox
                 checked={el.attending}
                 type="checkbox"
                 aria-label="attending"
@@ -117,21 +129,20 @@ function App() {
                 }}
               />
               {/* Button to delete a guest */}
-              <button
+              <RemoveButton
                 onClick={async () => {
                   await removeGuest(el.id);
                 }}
               >
                 Remove
-              </button>
-            </div>
-          ))
-
-          /* .filter((index) => index !== key={el.id}) */
-        }
-      </div>
-      {/*  {(guestList.filter((el , i) => i !== key={el.id}), [setGuesList])} */}
-    </div>
+              </RemoveButton>
+            </GuestList>
+          ))}
+        </div>
+      ) : (
+        <div>Loading Text</div>
+      )}
+    </Container>
   );
 }
 

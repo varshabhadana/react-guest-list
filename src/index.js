@@ -1,3 +1,4 @@
+import { css, Global } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -6,6 +7,26 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Global
+      styles={css`
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+        body {
+          margin: 0px;
+          background-color: #edede9;
+          padding: 0px;
+          color: #24100d;
+          font-family: arial, sans-serif;
+        }
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+      `}
+    />
     <App />
   </React.StrictMode>,
 );
