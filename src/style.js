@@ -19,7 +19,7 @@ export const Card = styled.div`
   box-shadow: 10px 10px 5px #888888;
   margin-bottom: 20px;
 `;
-export const Label = styled.div`
+export const Label = styled.label`
   font-size: 16px;
   margin-bottom: 10px;
   font-weight: bold;
