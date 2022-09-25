@@ -132,31 +132,32 @@ function App() {
         <div>
           <h3>Guest List:</h3>
 
-          {guestList.map((el) => (
-            <GuestList key={el.id} data-test-id="guest">
-              <p style={{ marginRight: '30px' }}>{el.firstName}</p>
-              <p style={{ marginRight: '30px' }}>{el.lastName}</p>
+          {guestList.length > 0 &&
+            guestList.map((el) => (
+              <GuestList key={el.id} data-test-id="guest">
+                <p style={{ marginRight: '30px' }}>{el.firstName}</p>
+                <p style={{ marginRight: '30px' }}>{el.lastName}</p>
 
-              {/* Checkbox to change attending status */}
-              <CheckBox
-                checked={el.attending}
-                type="checkbox"
-                aria-label="attending"
-                onChange={async (event) => {
-                  await updateGuest(el.id, event.target.checked);
-                }}
-              />
-              {/* Button to delete a guest */}
-              <RemoveButton
-                aria-label="Remove"
-                onClick={async () => {
-                  await removeGuest(el.id);
-                }}
-              >
-                Remove
-              </RemoveButton>
-            </GuestList>
-          ))}
+                {/* Checkbox to change attending status */}
+                <CheckBox
+                  checked={el.attending}
+                  type="checkbox"
+                  aria-label="attending"
+                  onChange={async (event) => {
+                    await updateGuest(el.id, event.target.checked);
+                  }}
+                />
+                {/* Button to delete a guest */}
+                <RemoveButton
+                  aria-label="Remove"
+                  onClick={async () => {
+                    await removeGuest(el.id);
+                  }}
+                >
+                  Remove
+                </RemoveButton>
+              </GuestList>
+            ))}
         </div>
       ) : (
         <div>Loading...</div>
