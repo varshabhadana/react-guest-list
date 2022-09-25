@@ -148,6 +148,7 @@ function App() {
               />
               {/* Button to delete a guest */}
               <RemoveButton
+                aria-label="Remove"
                 onClick={async () => {
                   await removeGuest(el.id);
                 }}
