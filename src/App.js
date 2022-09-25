@@ -88,8 +88,9 @@ function App() {
           }}
         >
           <InputContainer>
-            <Label htmlFor="First-name">First name</Label>
+            <Label htmlFor="first-name">First name</Label>
             <input
+              id="first-name"
               value={firstName}
               disabled={isLoading}
               onChange={(event) => {
@@ -99,8 +100,9 @@ function App() {
           </InputContainer>
           {/* Last name input */}
           <InputContainer>
-            <Label htmlFor="Last-name">Last name</Label>
+            <Label htmlFor="last-name">Last name</Label>
             <input
+              id="last-name"
               value={lastName}
               disabled={isLoading}
               onChange={(event) => {
