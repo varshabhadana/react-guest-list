@@ -29,7 +29,9 @@ function App() {
       setGuestList(data);
       setIsLoading(false);
     }
-    fetchGuest();
+    fetchGuest().catch((err) => {
+      console.error(err);
+    });
   }, []);
 
   // creating new guest
