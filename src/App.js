@@ -75,7 +75,7 @@ function App() {
   }
 
   return (
-    <Container data-test-id="guest">
+    <Container>
       <h1>Add Guest</h1>
       <Card>
         {/* First name input */}
@@ -133,7 +133,7 @@ function App() {
           <h3>Guest List:</h3>
 
           {guestList.map((el) => (
-            <GuestList key={el.id}>
+            <GuestList key={el.id} data-test-id="guest">
               <p style={{ marginRight: '30px' }}>{el.firstName}</p>
               <p style={{ marginRight: '30px' }}>{el.lastName}</p>
 
