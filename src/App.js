@@ -16,16 +16,18 @@ function App() {
 
   const [guestList, setGuestList] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const baseUrl = 'https://232afac8-d1ad-4b1c-a25c-b32515b1eaed.id.repl.co';
 
   // fetching data array
   useEffect(() => {
     async function fetchGuest() {
+      setIsLoading(true);
       const response = await fetch(`${baseUrl}/guests`);
       const data = await response.json();
       setGuestList(data);
+      setIsLoading(false);
     }
     fetchGuest();
   }, []);
@@ -43,6 +45,7 @@ function App() {
       }),
     });
     const createdGuest = await response.json();
+    setGuestList([...guestList, createdGuest]);
   }
   // Deleting a guest
   async function removeGuest(id) {
@@ -51,7 +54,7 @@ function App() {
     });
 
     const deletedGuest = await response.json();
-    console.log(deletedGuest);
+    setGuestList(guestList.filter((el) => el.id !== deletedGuest.id));
   }
 
   // Updating a guest
@@ -64,14 +67,10 @@ function App() {
       body: JSON.stringify({ attending: status }),
     });
     const updatedGuest = await response.json();
+    setGuestList(
+      guestList.map((el) => (el.id !== updatedGuest.id ? el : updatedGuest)),
+    );
   }
-
-  // is loading msg
-  useEffect(() => {
-    if (guestList.length > 0) {
-      setIsLoading(false);
-    }
-  }, [guestList]);
 
   return (
     <Container data-test-id="guest">
@@ -82,6 +81,7 @@ function App() {
           <Label htmlFor="First-name">First name</Label>
           <input
             value={firstName}
+            disabled={isLoading}
             onChange={(event) => {
               setFirstName(event.target.value);
             }}
@@ -92,6 +92,7 @@ function App() {
           <Label htmlFor="Last-name">Last name</Label>
           <input
             value={lastName}
+            disabled={isLoading}
             onChange={(event) => {
               setLastName(event.target.value);
             }}
@@ -109,7 +110,10 @@ function App() {
           Add
         </ButtonStyle>
       </Card>
-      {guestList.length > 0 ? (
+
+      {/* Ternary on Loading message */}
+
+      {!isLoading ? (
         /* /* Mapping over an array */
         <div>
           <h3>Guest List:</h3>
@@ -140,7 +144,7 @@ function App() {
           ))}
         </div>
       ) : (
-        <div>Loading Text</div>
+        <div>Loading...</div>
       )}
     </Container>
   );
